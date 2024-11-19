@@ -1,0 +1,5 @@
+build:
+    cargo build --target wasm32-wasip1
+
+run SRC DEST: build
+    wasmtime --dir=. target/wasm32-wasip1/debug/prime.wasm {{SRC}} {{DEST}}
