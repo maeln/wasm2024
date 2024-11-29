@@ -2,30 +2,15 @@
 extern crate rocket;
 
 use core::panic;
-use notify::{
-    event::AccessKind, recommended_watcher, Event, EventKind, RecursiveMode, Result, Watcher,
-};
-use rocket::{futures::task::WakerRef, State};
+use notify::{event::AccessKind, Event, EventKind, RecursiveMode, Result, Watcher};
+use rocket::State;
 use std::{
-    borrow::BorrowMut,
-    error::Error,
     ops::{Deref, DerefMut},
     path::Path,
     sync::{mpsc, Arc, RwLock},
     thread,
 };
 use wasmtime::{Engine, Instance, Module, Store};
-
-// fn exec() -> Result<(), Box<dyn Error>> {
-// An engine stores and configures global compilation settings like
-// optimization level, enabled wasm features, etc.
-
-// And finally we can call our function! Note that the error propagation
-// with `?` is done to handle the case where the wasm function traps.
-// let result = calc.call(&mut store, (2, 4))?;
-// println!("calc: {:?}", result);
-// Ok(())
-// }
 
 #[get("/")]
 fn index(wasm_state: &State<Arc<RwLock<WasmState>>>) -> String {
